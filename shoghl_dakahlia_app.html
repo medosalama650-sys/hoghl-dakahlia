@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#123c35">
+<title>شُغل الدقهلية | وظائف الدقهلية</title>
+<style>
+:root{--green:#123c35;--mint:#e8f3ee;--ink:#17231f;--muted:#64736d;--line:#e3e9e5;--gold:#e8b85a}
+*{box-sizing:border-box}body{margin:0;background:#f5f7f5;color:var(--ink);font-family:Tahoma,Arial,sans-serif}
+header{background:var(--green);color:#fff;padding:22px 18px 24px;border-radius:0 0 24px 24px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-size:23px;font-weight:800}.tag{font-size:12px;color:#d2e5dc;margin-top:6px}
+.pill{border:1px solid #ffffff55;border-radius:30px;padding:7px 10px;font-size:12px;white-space:nowrap}
+h1{font-size:21px;margin:22px 0 6px}header p{margin:0;color:#d2e5dc;font-size:13px;line-height:1.7}
+main{max-width:720px;margin:auto;padding:16px 14px 90px}
+.search{display:flex;gap:8px;margin-top:-1px}.search input{flex:1;min-width:0}
+input,select,textarea{width:100%;padding:13px;border:1px solid var(--line);border-radius:12px;background:white;font:inherit;font-size:14px;color:var(--ink);outline-color:var(--green)}
+button{border:0;border-radius:12px;padding:12px 15px;background:var(--green);color:#fff;font:inherit;font-weight:700;cursor:pointer}
+.filters{display:flex;gap:8px;overflow:auto;padding:14px 0 4px}.chip{white-space:nowrap;border:1px solid var(--line);background:#fff;color:var(--muted);padding:9px 12px;border-radius:24px;font-size:13px}.chip.active{background:var(--mint);color:var(--green);border-color:#b8d8ca}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;margin:18px 2px 12px}.sectionhead h2{font-size:18px;margin:0}.count{font-size:12px;color:var(--muted)}
+.job{background:white;border:1px solid var(--line);border-radius:17px;padding:15px;margin-bottom:11px;box-shadow:0 3px 12px #132c2010}
+.jobtop{display:flex;justify-content:space-between;gap:10px}.job h3{margin:0 0 7px;font-size:16px}.company{font-size:13px;color:var(--muted)}.new{font-size:11px;background:var(--mint);color:var(--green);padding:5px 8px;border-radius:20px;height:max-content}
+.details{display:flex;flex-wrap:wrap;gap:7px;margin:13px 0}.detail{background:#f5f7f5;padding:6px 9px;border-radius:8px;font-size:12px;color:#4d5e56}
+.jobbottom{display:flex;justify-content:space-between;align-items:center;gap:8px}.salary{font-size:14px;font-weight:800;color:var(--green)}.apply{font-size:12px;padding:10px 13px}
+.notice{background:#fff7e7;border:1px solid #f3dfb3;border-radius:13px;padding:12px;font-size:12px;line-height:1.8;color:#6b5529;margin-top:18px}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#ffffffed;backdrop-filter:blur(8px);border-top:1px solid var(--line);display:flex;justify-content:center;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));z-index:5}
+.nav button{flex:1;max-width:220px}.nav .secondary{background:var(--mint);color:var(--green)}
+.modal{position:fixed;inset:0;background:#071b16a8;display:none;align-items:flex-end;justify-content:center;z-index:10;padding:12px}.modal.show{display:flex}.sheet{background:#f8faf8;border-radius:22px 22px 14px 14px;padding:20px;width:100%;max-width:560px;max-height:90vh;overflow:auto}.sheethead{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.sheet h2{margin:0;font-size:19px}.close{background:#e9eeeb;color:var(--ink);padding:8px 12px}.field{margin-bottom:12px}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.empty{padding:25px;text-align:center;color:var(--muted);background:#fff;border-radius:15px}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:14px}
+@media(min-width:600px){.modal{align-items:center}.sheet{border-radius:22px}.joblist{display:grid;grid-template-columns:1fr 1fr;gap:10px}.job{margin:0}}
+</style>
+</head>
+<body>
+<header>
+ <div class="top"><div><div class="brand">شُغل الدقهلية</div><div class="tag">فرص شغل قريبة منك</div></div><div class="pill" id="connectionStatus">جاري الاتصال...</div></div>
+ <h1>دوّر على شغل يناسبك</h1>
+ <p>وظائف في المنصورة والقرى المحيطة بها، مع نطاق قابل للتحديد ناحية دكرنس.</p>
+</header>
+<main>
+ <div class="search"><input id="search" placeholder="اكتب الوظيفة أو اسم المكان..." aria-label="البحث"><button id="searchBtn">بحث</button></div>
+ <div class="filters" id="filters">
+  <button class="chip active" data-area="الكل">كل المناطق</button><button class="chip" data-area="المنصورة">المنصورة</button><button class="chip" data-area="أويش الحجر">أويش الحجر</button><button class="chip" data-area="البدالة">البدالة</button><button class="chip" data-area="البرامون">البرامون</button><button class="chip" data-area="البقلية">البقلية</button><button class="chip" data-area="برق العز">برق العز</button><button class="chip" data-area="بدواي">بدواي</button><button class="chip" data-area="شها">شها</button><button class="chip" data-area="طناح">طناح</button><button class="chip" data-area="ميت بدر خميس">ميت بدر خميس</button><button class="chip" data-area="ميت مزاح">ميت مزاح</button><button class="chip" data-area="محلة الدمنة">محلة الدمنة</button>
+ </div>
+ <div class="sectionhead"><h2>أحدث الوظائف</h2><span class="count" id="count"></span></div>
+ <div class="joblist" id="joblist"></div>
+ <div class="notice" id="notice"><b>تنبيه:</b> الوظائف المعروضة يضيفها المستخدمون عبر قاعدة البيانات المشتركة. اتأكد من تفاصيل الوظيفة وصاحب العمل قبل مشاركة أي بيانات شخصية.</div>
+ <footer>شُغل الدقهلية — وظائف محلية مع التقديم عبر واتساب</footer>
+</main>
+<div class="nav"><button id="openForm">＋ انشر وظيفة</button><button class="secondary" id="aboutBtn">عن المنصة</button></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="formTitle">
+ <div class="sheet"><div class="sheethead"><h2 id="formTitle">انشر وظيفة جديدة</h2><button class="close" id="closeForm">إغلاق</button></div>
+ <form id="jobForm">
+  <div class="field"><label for="title">المسمى الوظيفي *</label><input id="title" required placeholder="مثال: كاشير"></div>
+  <div class="field"><label for="company">اسم المكان أو الشركة *</label><input id="company" required placeholder="اسم المطعم أو الشركة"></div>
+  <div class="grid2"><div class="field"><label for="area">المنطقة *</label><select id="area" required><option value="">اختار المنطقة</option><option>المنصورة</option><option>أويش الحجر</option><option>البدالة</option><option>البرامون</option><option>البقلية</option><option>برق العز</option><option>بدواي</option><option>شها</option><option>طناح</option><option>ميت بدر خميس</option><option>ميت مزاح</option><option>محلة الدمنة</option></select></div>
+  <div class="field"><label for="salary">المرتب</label><input id="salary" placeholder="مثال: 6000 جنيه"></div></div>
+  <div class="field"><label for="hours">مواعيد العمل</label><input id="hours" placeholder="مثال: 9 ساعات"></div>
+  <div class="field"><label for="phone">رقم التواصل *</label><input id="phone" type="tel" required placeholder="رقم صاحب العمل"></div>
+  <div class="field"><label for="desc">تفاصيل وشروط الوظيفة</label><textarea id="desc" rows="3" placeholder="الخبرة المطلوبة، السن إن كان شرطًا مهنيًا مشروعًا، وطبيعة العمل..."></textarea></div>
+  <button type="submit" style="width:100%">نشر الوظيفة</button>
+ </form></div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>
+// قاعدة Firebase الخاصة بمشروع شُغل الدقهلية
+const firebaseConfig = {
+  databaseURL: "https://shoghl-dakahlia-e31d2-default-rtdb.firebaseio.com/"
+};
+
+let jobs = [];
+let selectedArea = "الكل";
+let db = null;
+let jobsRef = null;
+let connected = false;
+const $ = id => document.getElementById(id);
+
+function setStatus(message, good=false) {
+  const el = $("connectionStatus");
+  el.textContent = message;
+  el.style.background = good ? "#d7f2e4" : "";
+  el.style.color = good ? "#123c35" : "";
+}
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function normalizePhone(raw) {
+  let phone = String(raw || "").trim().replace(/[^0-9]/g, "");
+  if (phone.startsWith("01") && phone.length === 11) phone = "2" + phone;
+  return phone;
+}
+function render() {
+  const q = $("search").value.trim().toLowerCase();
+  const filtered = jobs.filter(j =>
+    (selectedArea === "الكل" || j.area === selectedArea) &&
+    (!q || [j.title, j.company, j.area, j.desc, j.salary].join(" ").toLowerCase().includes(q))
+  );
+  $("count").textContent = filtered.length + " وظيفة";
+  $("joblist").innerHTML = filtered.length ? filtered.map(j => `
+    <article class="job">
+      <div class="jobtop"><div><h3>${esc(j.title)}</h3><div class="company">${esc(j.company)}</div></div><span class="new">فرصة عمل</span></div>
+      <div class="details"><span class="detail">📍 ${esc(j.area)}</span><span class="detail">🕒 ${esc(j.hours || "حسب الاتفاق")}</span></div>
+      ${j.desc ? `<p style="font-size:13px;line-height:1.8;margin:0 0 12px;color:#4d5e56">${esc(j.desc)}</p>` : ""}
+      <div class="jobbottom"><span class="salary">${esc(j.salary || "يُحدد عند التواصل")}</span><button class="apply" data-apply="${esc(j.id)}">قدّم على واتساب</button></div>
+    </article>`).join("") : `<div class="empty">${connected ? "مفيش وظائف منشورة لحد دلوقتي. تقدر تنشر أول وظيفة من الزر اللي تحت." : "جاري تحميل الوظائف..."}</div>`;
+}
+function showFirebaseError(error) {
+  console.error("Firebase error:", error);
+  setStatus("مشكلة اتصال");
+  $("notice").innerHTML = "<b>تعذر الاتصال بقاعدة البيانات.</b> راجع اتصال الإنترنت وقواعد Realtime Database، ثم أعد تحميل الصفحة.";
+}
+
+try {
+  if (!window.firebase) throw new Error("تعذر تحميل مكتبة Firebase. تأكد من الإنترنت.");
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.database();
+  jobsRef = db.ref("jobs");
+  jobsRef.on("value", snapshot => {
+    const data = snapshot.val() || {};
+    jobs = Object.keys(data).map(key => ({ id: key, ...data[key] }))
+      .filter(j => j && j.title && j.company && j.area)
+      .sort((a,b) => Number(b.createdAt || 0) - Number(a.createdAt || 0));
+    connected = true;
+    setStatus("متصل بقاعدة البيانات", true);
+    render();
+  }, showFirebaseError);
+} catch (error) {
+  showFirebaseError(error);
+  $("joblist").innerHTML = '<div class="empty">تعذر تشغيل الاتصال. افتح الصفحة مع اتصال إنترنت وتأكد من إعداد Firebase.</div>';
+}
+
+window.apply = id => {
+  const j = jobs.find(item => item.id === id);
+  if (!j) return alert("الإعلان لم يعد متاحًا. حدّث الصفحة وجرب مرة أخرى.");
+  const phone = normalizePhone(j.phone);
+  if (!phone || !/^\d{10,15}$/.test(phone)) return alert("رقم واتساب في الإعلان غير صحيح.");
+  const msg = "السلام عليكم، أنا مهتم بالتقديم على وظيفة " + j.title + " في " + j.area + ". هل الوظيفة ما زالت متاحة؟";
+  window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
+};
+$("joblist").addEventListener("click", e => {
+  const button = e.target.closest("button[data-apply]");
+  if (button) window.apply(button.dataset.apply);
+});
+$("filters").addEventListener("click", e => {
+  const b = e.target.closest("button[data-area]");
+  if (!b) return;
+  selectedArea = b.dataset.area;
+  document.querySelectorAll(".chip").forEach(x => x.classList.toggle("active", x === b));
+  render();
+});
+$("searchBtn").onclick = render;
+$("search").addEventListener("input", render);
+$("search").addEventListener("keydown", e => { if (e.key === "Enter") render(); });
+$("openForm").onclick = () => $("modal").classList.add("show");
+$("closeForm").onclick = () => $("modal").classList.remove("show");
+$("modal").addEventListener("click", e => { if (e.target === $("modal")) $("modal").classList.remove("show"); });
+$("aboutBtn").onclick = () => alert("شُغل الدقهلية: منصة وظائف محلية في المنصورة والقرى المحيطة، والتقديم من خلال واتساب.");
+$("jobForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  if (!jobsRef || !connected) return alert("قاعدة البيانات لسه مش متصلة. استنى لحد ما تظهر رسالة متصل بقاعدة البيانات.");
+  const phone = normalizePhone($("phone").value);
+  if (phone.startsWith("201") && phone.length === 12) {
+    // رقم مصري بصيغة دولية
+  } else {
+    return alert("اكتب رقم واتساب مصري يبدأ بـ 01 (11 رقم) أو رقم دولي صحيح.");
+  }
+  const submitButton = $("jobForm").querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  submitButton.textContent = "جاري النشر...";
+  const job = {
+    title: $("title").value.trim().slice(0,100),
+    company: $("company").value.trim().slice(0,100),
+    area: $("area").value,
+    salary: ($("salary").value.trim() || "يُحدد عند التواصل").slice(0,80),
+    hours: ($("hours").value.trim() || "حسب الاتفاق").slice(0,80),
+    desc: $("desc").value.trim().slice(0,600),
+    phone,
+    createdAt: Date.now()
+  };
+  try {
+    await jobsRef.push(job);
+    $("jobForm").reset();
+    $("modal").classList.remove("show");
+    selectedArea = "الكل";
+    document.querySelectorAll(".chip").forEach(x => x.classList.toggle("active", x.dataset.area === "الكل"));
+    render();
+    alert("تم نشر الوظيفة بنجاح، وهتظهر عند باقي المستخدمين المتصلين بنفس قاعدة البيانات.");
+  } catch (error) {
+    console.error(error);
+    alert("النشر فشل. راجع صلاحيات الكتابة في Firebase وتأكد من اتصال الإنترنت.");
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = "نشر الوظيفة";
+  }
+});
+</script>
+</body>
+</html>
