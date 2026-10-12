@@ -105,7 +105,9 @@ info.textContent="📍 "+j.area+" | "+(j.company||"جهة العمل غير مح
 card.appendChild(info);
 if(j.details){const d=document.createElement("p");d.textContent=j.details;card.appendChild(d)}
 const link=document.createElement("a");link.className="apply";link.textContent="التقديم عبر واتساب";
-link.href="https://wa.me/"+j.phone.replace(/\D/g,"");
+let phone=j.phone.replace(/\D/g,"");
+if(phone.startsWith("0")) phone="20"+phone.substring(1);
+link.href="https://wa.me/"+phone;
 link.target="_blank";link.rel="noopener";card.appendChild(link);
 $("jobs").appendChild(card);
 });
