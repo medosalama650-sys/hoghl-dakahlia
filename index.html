@@ -1,1 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>شغل الدقهلية | منصة الوظائف الحقيقية</title>
+<style>
+:root{--green:#123c35;--mint:#e8f3ee;--gold:#e8b85a}
+*{box-sizing:border-box}
+body{margin:0;background:#f4f7f5;font-family:Arial,sans-serif;color:#19332d}
+header{background:var(--green);color:white;padding:22px 16px;border-bottom:4px solid var(--gold)}
+header h1{margin:0 0 8px;font-size:25px}
+header p{margin:0;color:#e8f3ee}
+main{max-width:750px;margin:auto;padding:16px}
+.panel{background:white;border-radius:14px;padding:16px;margin-bottom:16px;box-shadow:0 3px 12px #123c3510}
+h2{font-size:19px;margin-top:0}
+input,select,textarea,button{width:100%;padding:12px;margin:6px 0;border-radius:9px;border:1px solid #d5e1da;font:inherit}
+button{background:var(--green);color:white;border:0;font-weight:bold;cursor:pointer}
+button.gold{background:var(--gold);color:#25352c}
+.job{border:1px solid #dce8e1;border-radius:12px;padding:14px;margin:12px 0}
+.job h3{margin:0 0 8px;color:var(--green)}
+.meta{color:#62766c;font-size:14px;line-height:1.9}
+.apply{display:block;text-align:center;background:#16834a;color:white;padding:12px;border-radius:9px;text-decoration:none;margin-top:10px}
+small{color:#62766c}
+</style>
+</head>
+<body>
+<header>
+<h1>شغل الدقهلية 💚</h1>
+<p>منصة الوظائف الحقيقية — فرص عمل قريبة منك</p>
+</header>
+<main>
+<section class="panel">
+<h2>🔎 دور على شغل</h2>
+<input id="search" placeholder="اكتب اسم الوظيفة أو المكان">
+<select id="filter">
+<option value="">كل المناطق</option>
+<option>المنصورة</option>
+<option>أويش الحجر</option>
+<option>البدالة</option>
+<option>البرامون</option>
+<option>البقلية</option>
+<option>برق العز</option>
+<option>بدواي</option>
+<option>شها</option>
+<option>طناح</option>
+<option>ميت بدر خميس</option>
+<option>ميت مزاح</option>
+<option>محلة الدمنة</option>
+</select>
+</section>
 
+<section class="panel">
+<h2>➕ انشر فرصة عمل</h2>
+<form id="jobForm">
+<input id="title" placeholder="اسم الوظيفة" required>
+<input id="company" placeholder="اسم المحل أو الشركة">
+<select id="area" required>
+<option value="">اختار المنطقة</option>
+<option>المنصورة</option>
+<option>أويش الحجر</option>
+<option>البدالة</option>
+<option>البرامون</option>
+<option>البقلية</option>
+<option>برق العز</option>
+<option>بدواي</option>
+<option>شها</option>
+<option>طناح</option>
+<option>ميت بدر خميس</option>
+<option>ميت مزاح</option>
+<option>محلة الدمنة</option>
+</select>
+<input id="salary" placeholder="المرتب (اختياري)">
+<textarea id="details" placeholder="تفاصيل الشغل ومواعيد العمل"></textarea>
+<input id="phone" type="tel" placeholder="رقم واتساب صاحب الوظيفة" required>
+<button type="submit">نشر الوظيفة</button>
+</form>
+<small>النسخة الحالية تحفظ الوظائف على نفس الجهاز فقط.</small>
+</section>
+
+<section class="panel">
+<h2>💼 الوظائف المتاحة</h2>
+<div id="jobs"></div>
+</section>
+</main>
+
+<script>
+const key="dakahlia_jobs_v1";
+const $=id=>document.getElementById(id);
+let jobs=[];
+try{jobs=JSON.parse(localStorage.getItem(key)||"[]")}catch(e){jobs=[]}
+function render(){
+const q=$("search").value.trim().toLowerCase();
+const a=$("filter").value;
+const list=jobs.filter(j=>(!a||j.area===a)&&
+[j.title,j.company,j.area,j.details].join(" ").toLowerCase().includes(q));
+$("jobs").innerHTML="";
+if(!list.length){$("jobs").textContent="مفيش وظائف مطابقة دلوقتي. جرّب تغيّر البحث أو انشر فرصة جديدة.";return}
+list.forEach(j=>{
+const card=document.createElement("article");
+card.className="job";
+const h=document.createElement("h3");h.textContent=j.title;card.appendChild(h);
+const info=document.createElement("div");info.className="meta";
+info.textContent="📍 "+j.area+" | "+(j.company||"جهة العمل غير محددة")+(j.salary?" | 💰 "+j.salary:"");
+card.appendChild(info);
+if(j.details){const d=document.createElement("p");d.textContent=j.details;card.appendChild(d)}
+const link=document.createElement("a");link.className="apply";link.textContent="التقديم عبر واتساب";
+link.href="https://wa.me/"+j.phone.replace(/\D/g,"");
+link.target="_blank";link.rel="noopener";card.appendChild(link);
+$("jobs").appendChild(card);
+});
+}
+$("jobForm").addEventListener("submit",e=>{
+e.preventDefault();
+const phone=$("phone").value.replace(/\D/g,"");
+if(phone.length<10){alert("اكتب رقم واتساب صحيحًا مع مفتاح الدولة لو أمكن.");return}
+const j={title:$("title").value.trim(),company:$("company").value.trim(),
+area:$("area").value,salary:$("salary").value.trim(),
+details:$("details").value.trim(),phone};
+jobs.unshift(j);
+try{localStorage.setItem(key,JSON.stringify(jobs))}
+catch(e){jobs.shift();alert("مساحة التخزين غير كافية.");return}
+e.target.reset();render();alert("تمت إضافة الوظيفة على هذا الجهاز.");
+});
+$("search").addEventListener("input",render);
+$("filter").addEventListener("change",render);
+render();
+</script>
+</body>
+  </html>
