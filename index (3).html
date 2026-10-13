@@ -4,251 +4,257 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#123c35">
 <title>شغل الدقهلية | منصة الوظائف الحقيقية</title>
 <style>
-:root{--green:#123c35;--mint:#e8f3ee;--gold:#e8b85a;--white:#fff}
+:root{--green:#123c35;--mint:#e8f3ee;--gold:#e8b85a}
 *{box-sizing:border-box}
-body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#f4f7f5;color:#20342e}
-header{background:var(--green);color:white;padding:24px 16px;text-align:center}
-header h1{margin:0 0 9px;font-size:27px}
-header p{margin:0;color:#dcebe4}
-main{max-width:760px;margin:auto;padding:16px}
-.panel{background:white;border-radius:15px;padding:17px;margin-bottom:16px;box-shadow:0 3px 14px #123c3510}
-h2{font-size:19px;color:var(--green);margin:0 0 15px}
-input,select,textarea,button{font:inherit;width:100%;padding:12px;border-radius:9px}
-input,select,textarea{border:1px solid #d6e1db;background:white;margin-bottom:10px}
-textarea{min-height:90px;resize:vertical}
-button{border:0;background:var(--green);color:white;font-weight:bold;cursor:pointer}
+body{margin:0;background:#f4f7f5;font-family:Arial,sans-serif;color:#19332d}
+header{background:var(--green);color:white;padding:22px 16px;border-bottom:4px solid var(--gold)}
+header h1{margin:0 0 8px;font-size:25px}
+header p{margin:0;color:var(--mint)}
+main{max-width:750px;margin:auto;padding:16px}
+.panel{background:white;border-radius:14px;padding:16px;margin-bottom:16px;box-shadow:0 3px 12px #123c3510}
+h2{font-size:19px;margin-top:0}
+input,select,textarea,button{width:100%;padding:12px;margin:6px 0;border-radius:9px;border:1px solid #d5e1da;font:inherit}
+button{background:var(--green);color:white;border:0;font-weight:bold;cursor:pointer}
 button:disabled{opacity:.6}
-.secondary{background:var(--gold);color:#26352f}
-.job{border:1px solid #e0e9e3;border-radius:12px;padding:14px;margin-top:12px}
-.job h3{color:var(--green);margin:0 0 9px}
-.meta{font-size:14px;line-height:1.9;color:#52645c}
-.details{white-space:pre-wrap;line-height:1.8;margin:10px 0}
-.whatsapp{display:block;text-align:center;text-decoration:none;background:#187b4b;color:white;padding:11px;border-radius:9px;font-weight:bold;margin-top:10px}
-.notice{font-size:13px;color:#5d6e65;line-height:1.8}
-#status{font-size:14px;line-height:1.8;margin:8px 0}
-.empty{text-align:center;padding:20px;color:#6a7971}
-footer{text-align:center;color:#6a7971;font-size:12px;padding:20px}
+.job{border:1px solid #dce8e1;border-radius:12px;padding:14px;margin:12px 0}
+.job h3{margin:0 0 8px;color:var(--green)}
+.meta{color:#62766c;font-size:14px;line-height:1.9}
+.apply{display:block;text-align:center;background:#16834a;color:white;padding:12px;border-radius:9px;text-decoration:none;margin-top:10px}
+small{color:#62766c;line-height:1.8}
+#status{line-height:1.8}
 </style>
 </head>
 <body>
 <header>
-  <h1>شغل الدقهلية</h1>
-  <p>منصة الوظائف الحقيقية — فرص عمل قريبة منك</p>
+<h1>شغل الدقهلية 💚</h1>
+<p>منصة الوظائف الحقيقية — فرص عمل قريبة منك</p>
 </header>
 
 <main>
-  <section class="panel">
-    <h2>🔎 دور على شغل</h2>
-    <input id="search" placeholder="اكتب اسم الوظيفة أو الشركة">
-    <select id="filterArea">
-      <option value="">كل المناطق</option>
-    </select>
-    <p class="notice">الوظائف المنشورة تظهر هنا لجميع زوار المنصة.</p>
-  </section>
+<section class="panel">
+<h2>🔎 دور على شغل</h2>
+<input id="search" placeholder="اكتب اسم الوظيفة أو المكان">
+<select id="filter">
+<option value="">كل المناطق</option>
+<option>المنصورة</option>
+<option>أويش الحجر</option>
+<option>البدالة</option>
+<option>البرامون</option>
+<option>البقلية</option>
+<option>برق العز</option>
+<option>بدواي</option>
+<option>شها</option>
+<option>طناح</option>
+<option>ميت بدر خميس</option>
+<option>ميت مزاح</option>
+<option>محلة الدمنة</option>
+</select>
+</section>
 
-  <section class="panel">
-    <h2>➕ انشر وظيفة جديدة</h2>
-    <form id="jobForm">
-      <input id="title" maxlength="100" placeholder="اسم الوظيفة *" required>
-      <input id="company" maxlength="100" placeholder="اسم الشركة أو صاحب العمل">
-      <select id="area" required>
-        <option value="">اختار المنطقة *</option>
-      </select>
-      <input id="salary" maxlength="100" placeholder="الراتب (اختياري)">
-      <textarea id="details" maxlength="1500" placeholder="تفاصيل الوظيفة وشروطها"></textarea>
-      <input id="phone" inputmode="tel" maxlength="20" placeholder="رقم واتساب صاحب الوظيفة *" required>
-      <button id="submitBtn" type="submit">نشر الوظيفة</button>
-      <p class="notice">اكتب رقم واتساب صحيحًا. لا تنشر بيانات شخص آخر دون إذنه.</p>
-    </form>
-    <div id="status" role="status"></div>
-  </section>
+<section class="panel">
+<h2>➕ انشر فرصة عمل</h2>
+<form id="jobForm">
+<input id="title" placeholder="اسم الوظيفة" maxlength="100" required>
+<input id="company" placeholder="اسم المحل أو الشركة" maxlength="100">
+<select id="area" required>
+<option value="">اختار المنطقة</option>
+<option>المنصورة</option>
+<option>أويش الحجر</option>
+<option>البدالة</option>
+<option>البرامون</option>
+<option>البقلية</option>
+<option>برق العز</option>
+<option>بدواي</option>
+<option>شها</option>
+<option>طناح</option>
+<option>ميت بدر خميس</option>
+<option>ميت مزاح</option>
+<option>محلة الدمنة</option>
+</select>
+<input id="salary" placeholder="المرتب (اختياري)">
+<textarea id="details" placeholder="تفاصيل الشغل ومواعيد العمل" maxlength="1500"></textarea>
+<input id="phone" type="tel" placeholder="رقم واتساب صاحب الوظيفة" maxlength="20" required>
+<button id="submitBtn" type="submit">إرسال للمراجعة</button>
+</form>
+<p id="status" role="status">جاري الاتصال بالخدمة...</p>
+<small>الوظيفة مش هتظهر للناس إلا بعد مراجعتها والموافقة عليها.</small>
+</section>
 
-  <section class="panel">
-    <h2>📋 الوظائف المتاحة</h2>
-    <div id="jobs"><p class="empty">جاري تحميل الوظائف...</p></div>
-  </section>
+<section class="panel">
+<h2>💼 الوظائف المعتمدة</h2>
+<div id="jobs">جاري تحميل الوظائف...</div>
+</section>
 </main>
 
-<footer>شغل الدقهلية © منصة محلية لعرض فرص العمل</footer>
-
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+
 import {
-  getFirestore, collection, addDoc, onSnapshot,
-  query, orderBy, serverTimestamp
+getFirestore,collection,addDoc,onSnapshot,query,where,
+serverTimestamp
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
 import {
-  getAuth, signInAnonymously
+getAuth,signInAnonymously
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAx1gcyth1FEOCV2z4peE3nP7F5d2IHDOc",
-  authDomain: "hoghl-dakahlia.firebaseapp.com",
-  projectId: "hoghl-dakahlia",
-  storageBucket: "hoghl-dakahlia.firebasestorage.app",
-  messagingSenderId: "437958970783",
-  appId: "1:437958970783:web:0399059a90cec0e0aa01aa",
-  measurementId: "G-2ZKG5V6ESQ"
+apiKey: "AIzaSyAx1gcyth1EFOCV2z4peE3nP7F5d2IHDOc",
+authDomain: "hoghl-dakahlia.firebaseapp.com",
+projectId: "hoghl-dakahlia",
+storageBucket: "hoghl-dakahlia.firebasestorage.app",
+messagingSenderId: "437958970783",
+appId: "1:437958970783:web:0399059a90cec0e0aa01aa",
+measurementId: "G-2ZKG5V6ESQ"
 };
 
-const areas = [
-  "المنصورة","أويش الحجر","البدالة","البرامون","البقلية",
-  "برق العز","بدواي","شها","طناح","ميت بدر خميس",
-  "ميت مزاح","محلة الدمنة"
-];
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
 
 const $ = id => document.getElementById(id);
-const statusBox = $("status");
-const jobsBox = $("jobs");
-let allJobs = [];
+let jobs = [];
 
-for (const area of areas) {
-  $("area").add(new Option(area, area));
-  $("filterArea").add(new Option(area, area));
+function showStatus(message, error=false) {
+  $("status").textContent = message;
+  $("status").style.color = error ? "#b42318" : "#19332d";
 }
 
-function showStatus(message, error = false) {
-  statusBox.textContent = message;
-  statusBox.style.color = error ? "#b42318" : "#187b4b";
-}
+function render() {
+  const search = $("search").value.trim().toLowerCase();
+  const area = $("filter").value;
+  const list = jobs.filter(job =>
+    (!area || job.area === area) &&
+    [job.title,job.company,job.area,job.details,job.salary]
+      .join(" ").toLowerCase().includes(search)
+  );
 
-function cleanPhone(value) {
-  let phone = value.replace(/\D/g, "");
-  if (phone.startsWith("00")) phone = phone.slice(2);
-  if (phone.startsWith("0")) phone = "20" + phone.slice(1);
-  return phone;
-}
+  $("jobs").replaceChildren();
 
-function makeElement(tag, className, text) {
-  const el = document.createElement(tag);
-  if (className) el.className = className;
-  if (text !== undefined) el.textContent = text;
-  return el;
-}
-
-function renderJobs() {
-  const term = $("search").value.trim().toLowerCase();
-  const area = $("filterArea").value;
-
-  const filtered = allJobs.filter(job => {
-    const text = [job.title, job.company, job.area, job.details]
-      .join(" ").toLowerCase();
-    return text.includes(term) && (!area || job.area === area);
-  });
-
-  jobsBox.replaceChildren();
-
-  if (!filtered.length) {
-    jobsBox.append(makeElement("p", "empty",
-      allJobs.length ? "مفيش وظائف مطابقة للبحث." : "لسه مفيش وظائف منشورة. كن أول من ينشر وظيفة!"));
+  if (!list.length) {
+    $("jobs").textContent = "مفيش وظائف معتمدة مطابقة دلوقتي.";
     return;
   }
 
-  for (const job of filtered) {
-    const card = makeElement("article", "job");
-    card.append(makeElement("h3", "", job.title || "وظيفة"));
+  list.forEach(job => {
+    const card = document.createElement("article");
+    card.className = "job";
 
-    const info = [
-      job.company ? "الشركة: " + job.company : "",
-      job.area ? "المنطقة: " + job.area : "",
-      job.salary ? "الراتب: " + job.salary : ""
-    ].filter(Boolean).join(" • ");
+    const title = document.createElement("h3");
+    title.textContent = job.title || "وظيفة";
+    card.appendChild(title);
 
-    card.append(makeElement("div", "meta", info));
+    const meta = document.createElement("div");
+    meta.className = "meta";
+    meta.textContent =
+      "📍 " + (job.area || "غير محدد") +
+      " | " + (job.company || "جهة العمل غير محددة") +
+      (job.salary ? " | 💰 " + job.salary : "");
+    card.appendChild(meta);
 
     if (job.details) {
-      card.append(makeElement("p", "details", job.details));
+      const details = document.createElement("p");
+      details.textContent = job.details;
+      card.appendChild(details);
     }
 
-    const phone = cleanPhone(job.phone || "");
-    if (phone.length >= 10 && phone.length <= 15) {
-      const link = document.createElement("a");
-      link.className = "whatsapp";
-      link.href = "https://wa.me/" + phone + "?text=" +
-        encodeURIComponent("السلام عليكم، أنا مهتم بوظيفة: " + (job.title || ""));
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.textContent = "التقديم عبر واتساب";
-      card.append(link);
-    }
+    const link = document.createElement("a");
+    link.className = "apply";
+    link.textContent = "التقديم عبر واتساب";
 
-    jobsBox.append(card);
-  }
+    let phone = String(job.phone || "").replace(/\D/g,"");
+    if (phone.startsWith("00")) phone = phone.substring(2);
+    if (phone.startsWith("0")) phone = "20" + phone.substring(1);
+
+    link.href = "https://wa.me/" + phone;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    card.appendChild(link);
+
+    $("jobs").appendChild(card);
+  });
 }
 
-$("search").addEventListener("input", renderJobs);
-$("filterArea").addEventListener("change", renderJobs);
+$("jobForm").addEventListener("submit", async event => {
+  event.preventDefault();
 
-async function startApp() {
+  const btn = $("submitBtn");
+  btn.disabled = true;
+  btn.textContent = "جاري الإرسال...";
+
   try {
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
+    const title = $("title").value.trim();
+    const company = $("company").value.trim();
+    const area = $("area").value;
+    const salary = $("salary").value.trim();
+    const details = $("details").value.trim();
+    const phone = $("phone").value.replace(/\D/g,"");
 
-    await signInAnonymously(auth);
-    showStatus("التطبيق متصل وجاهز لاستقبال الوظائف.");
+    if (phone.length < 10 || phone.length > 15) {
+      showStatus("اكتب رقم واتساب صحيحًا.", true);
+      return;
+    }
 
-    const jobsQuery = query(
-      collection(db, "jobs"),
-      orderBy("createdAt", "desc")
-    );
+    if (!auth.currentUser) {
+      await signInAnonymously(auth);
+    }
 
-    onSnapshot(jobsQuery, snapshot => {
-      allJobs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      renderJobs();
-    }, error => {
-      console.error(error);
-      showStatus("تعذر تحميل الوظائف. راجع إعدادات Firebase.", true);
-      jobsBox.replaceChildren(makeElement("p", "empty",
-        "حصلت مشكلة في تحميل الوظائف. حاول تحديث الصفحة."));
+    await addDoc(collection(db, "jobs"), {
+      title,
+      company,
+      area,
+      salary,
+      details,
+      phone,
+      status: "pending",
+      createdAt: serverTimestamp()
     });
 
-    $("jobForm").addEventListener("submit", async event => {
-      event.preventDefault();
-      const btn = $("submitBtn");
-      const title = $("title").value.trim();
-      const company = $("company").value.trim() || "غير محدد";
-      const area = $("area").value;
-      const salary = $("salary").value.trim() || "يحدد عند المقابلة";
-      const details = $("details").value.trim();
-      const phone = cleanPhone($("phone").value);
+    $("jobForm").reset();
+    showStatus("تم إرسال الوظيفة للمراجعة. هتظهر بعد الموافقة ❤️");
 
-      if (!title || !area || phone.length < 10 || phone.length > 15) {
-        showStatus("راجع اسم الوظيفة والمنطقة ورقم واتساب.", true);
-        return;
-      }
-
-      btn.disabled = true;
-      btn.textContent = "جاري النشر...";
-      showStatus("");
-
-      try {
-        await addDoc(collection(db, "jobs"), {
-          title, company, area, salary, details, phone,
-          createdAt: serverTimestamp()
-        });
-        $("jobForm").reset();
-        showStatus("تم نشر الوظيفة بنجاح ❤️");
-      } catch (error) {
-        console.error(error);
-        showStatus("النشر لم ينجح. تأكد من إعدادات Firebase ثم حاول مرة أخرى.", true);
-      } finally {
-        btn.disabled = false;
-        btn.textContent = "نشر الوظيفة";
-      }
-    });
   } catch (error) {
     console.error(error);
-    showStatus("تعذر الاتصال. تأكد من تفعيل Anonymous في Firebase Authentication.", true);
-    jobsBox.replaceChildren(makeElement("p", "empty",
-      "التطبيق غير متصل بقاعدة البيانات حاليًا."));
+    showStatus(
+      "الإرسال لم ينجح. تأكد من إعدادات Firebase وقواعد Firestore.",
+      true
+    );
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "إرسال للمراجعة";
   }
-}
+});
 
-startApp();
+$("search").addEventListener("input",render);
+$("filter").addEventListener("change",render);
+
+const approvedQuery = query(
+  collection(db, "jobs"),
+  where("status", "==", "approved")
+);
+
+onSnapshot(approvedQuery, snapshot => {
+  jobs = snapshot.docs.map(item => ({
+    id: item.id,
+    ...item.data()
+  }));
+
+  jobs.sort((a,b) => {
+    const timeA = a.createdAt?.toMillis?.() || 0;
+    const timeB = b.createdAt?.toMillis?.() || 0;
+    return timeB - timeA;
+  });
+
+  render();
+}, error => {
+  console.error(error);
+  $("jobs").textContent = "تعذر تحميل الوظائف. راجع إعدادات Firebase.";
+});
+
+showStatus("جاهز لاستقبال الوظائف.");
 </script>
 </body>
 </html>
