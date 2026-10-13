@@ -1,0 +1,13 @@
+{
+  "background_color": "#e8f3ee",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "شغل الدقهلية",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "شغل الدقهلية",
+  "start_url": "/",
+  "theme_color": "#123c35",
+  "id": "/hoghl-dakahlia/",
+  "description": "منصة الوظائف الحقيقية في المنصورة ومراكز وقرى الدقهلية"
+}
