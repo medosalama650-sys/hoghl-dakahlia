@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#123c35">
+  <meta name="description" content="شغل الدقهلية: منصة الوظائف وفرص العمل في المنصورة ومراكز وقرى الدقهلية.">
+  <link rel="manifest" href="./manifest.json">
   <title>شغل الدقهلية | منصة الوظائف الحقيقية</title>
+
   <style>
     :root {
       --green: #123c35;
@@ -88,6 +90,7 @@
     }
   </style>
 </head>
+
 <body>
 <header>
   <h1>شغل الدقهلية</h1>
@@ -99,8 +102,11 @@
   <section class="panel">
     <h2>➕ أضف وظيفة</h2>
     <form id="jobForm">
-      <input id="title" maxlength="100" placeholder="المسمى الوظيفي *" required>
-      <input id="company" maxlength="100" placeholder="اسم الشركة أو صاحب العمل *" required>
+      <input id="title" maxlength="100"
+        placeholder="المسمى الوظيفي *" required>
+
+      <input id="company" maxlength="100"
+        placeholder="اسم الشركة أو صاحب العمل *" required>
 
       <select id="area" required>
         <option value="">اختر المنطقة *</option>
@@ -118,20 +124,30 @@
         <option>محلة الدمنة</option>
       </select>
 
-      <input id="salary" maxlength="100" placeholder="الراتب (اختياري)">
-      <textarea id="details" maxlength="1500" placeholder="تفاصيل الوظيفة وشروطها"></textarea>
+      <input id="salary" maxlength="100"
+        placeholder="الراتب (اختياري)">
+
+      <textarea id="details" maxlength="1500"
+        placeholder="تفاصيل الوظيفة وشروطها"></textarea>
+
       <input id="phone" type="tel" inputmode="tel" maxlength="20"
         placeholder="رقم واتساب صاحب الوظيفة *" required>
+
       <button id="submitBtn" type="submit">نشر الوظيفة</button>
-      <p class="notice">ستظهر الوظيفة بعد مراجعتها والموافقة عليها. لا تنشر رقم شخص آخر دون إذنه.</p>
+      <p class="notice">
+        ستظهر الوظيفة بعد مراجعتها والموافقة عليها.
+        لا تنشر رقم شخص آخر دون إذنه.
+      </p>
     </form>
     <div id="status" role="status" aria-live="polite"></div>
   </section>
 
   <section class="panel">
     <h2>📋 الوظائف المتاحة</h2>
+
     <div class="filters">
       <input id="search" placeholder="ابحث عن وظيفة أو شركة">
+
       <select id="filterArea">
         <option value="">كل المناطق</option>
         <option>المنصورة</option>
@@ -148,18 +164,24 @@
         <option>محلة الدمنة</option>
       </select>
     </div>
-    <div id="jobs"><p class="empty">جاري تحميل الوظائف...</p></div>
+
+    <div id="jobs">
+      <p class="empty">جاري تحميل الوظائف...</p>
+    </div>
   </section>
 </main>
 
 <footer>شغل الدقهلية © منصة محلية لعرض فرص العمل</footer>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { initializeApp } from
+  "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+
 import {
   getAuth,
   signInAnonymously
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
 import {
   getFirestore,
   collection,
@@ -191,12 +213,26 @@ function showStatus(message, isError = false) {
 }
 
 function cleanPhone(value) {
-  return value.replace(/[^\d+]/g, "");
+  return String(value || "").replace(/[^\d]/g, "");
 }
 
-function makeElement(tag, text) {
+function whatsappNumber(value) {
+  let number = cleanPhone(value);
+
+  // تحويل الرقم المصري المحلي إلى الصيغة الدولية
+  if (number.startsWith("0")) {
+    number = "20" + number.substring(1);
+  } else if (number.startsWith("20")) {
+    // الرقم بالفعل بصيغة مصر الدولية
+  }
+
+  return number;
+}
+
+function makeElement(tag, text, className = "") {
   const node = document.createElement(tag);
   node.textContent = text || "";
+  if (className) node.className = className;
   return node;
 }
 
@@ -208,46 +244,56 @@ function renderJobs(allJobs) {
   const area = $("filterArea").value;
 
   const filtered = allJobs.filter(job => {
-    const text = `${job.title || ""} ${job.company || ""} ${job.details || ""}`.toLowerCase();
-    return (!term || text.includes(term)) && (!area || job.area === area);
+    const text =
+      `${job.title || ""} ${job.company || ""} ${job.details || ""}`
+        .toLowerCase();
+
+    return (!term || text.includes(term)) &&
+      (!area || job.area === area);
   });
 
   if (!filtered.length) {
-    box.append(makeElement("p", "empty", "لا توجد وظائف منشورة تطابق بحثك حاليًا."));
+    box.append(
+      makeElement(
+        "p",
+        "لا توجد وظائف منشورة تطابق بحثك حاليًا.",
+        "empty"
+      )
+    );
     return;
   }
 
   filtered.forEach(job => {
     const card = document.createElement("article");
     card.className = "job";
+
     card.append(makeElement("h3", job.title || "وظيفة"));
     card.append(makeElement("p", "الشركة: " + (job.company || "غير محدد")));
     card.append(makeElement("p", "المنطقة: " + (job.area || "غير محددة")));
     card.append(makeElement("p", "الراتب: " + (job.salary || "يحدد عند المقابلة")));
-    if (job.details) card.append(makeElement("p", "التفاصيل: " + job.details));
 
-    const phone = cleanPhone(job.phone || "");
+    if (job.details) {
+      card.append(makeElement("p", "التفاصيل: " + job.details));
+    }
+
+    const phone = whatsappNumber(job.phone);
+
     if (phone) {
       const link = document.createElement("a");
       link.className = "whatsapp";
       link.target = "_blank";
       link.rel = "noopener noreferrer";
-let whatsappPhone = phone.replace(/\D/g, "");
-if (whatsappPhone.startsWith("0")) {
-whatsappPhone = "20" + whatsappPhone.substring(1);
-} else if (whatsappPhone.startsWith("+")) {
-whatsappPhone = phone.replace(/\D/g, "");
-}
-link.href = "https://wa.me/" + whatsappPhone;
-link.target = "_blank";
-link.textContent = "التقديم عبر واتساب";
-card.append(link);
+      link.href = "https://wa.me/" + phone;
+      link.textContent = "التقديم عبر واتساب";
+      card.append(link);
     }
+
     box.append(card);
   });
 }
 
 let allJobs = [];
+
 $("search").addEventListener("input", () => renderJobs(allJobs));
 $("filterArea").addEventListener("change", () => renderJobs(allJobs));
 
@@ -256,8 +302,15 @@ async function startApp() {
     await signInAnonymously(auth);
   } catch (error) {
     console.error("Authentication error:", error);
-    showStatus("تعذر الاتصال بحساب المستخدم. رمز الخطأ: " + (error.code || error.message), true);
-    $("jobs").replaceChildren(makeElement("p", "empty", "تعذر الاتصال بقاعدة البيانات."));
+    showStatus(
+      "تعذر الاتصال بحساب المستخدم. رمز الخطأ: " +
+      (error.code || error.message),
+      true
+    );
+
+    $("jobs").replaceChildren(
+      makeElement("p", "تعذر الاتصال بقاعدة البيانات.", "empty")
+    );
     return;
   }
 
@@ -267,12 +320,22 @@ async function startApp() {
   );
 
   onSnapshot(approvedQuery, snapshot => {
-    allJobs = snapshot.docs.map(item => ({ id: item.id, ...item.data() }));
+    allJobs = snapshot.docs.map(item => ({
+      id: item.id,
+      ...item.data()
+    }));
     renderJobs(allJobs);
   }, error => {
     console.error("Load jobs error:", error);
-    $("jobs").replaceChildren(makeElement("p", "empty",
-      "حصلت مشكلة في تحميل الوظائف. رمز الخطأ: " + (error.code || error.message)));
+
+    $("jobs").replaceChildren(
+      makeElement(
+        "p",
+        "حصلت مشكلة في تحميل الوظائف. رمز الخطأ: " +
+          (error.code || error.message),
+        "empty"
+      )
+    );
   });
 }
 
@@ -313,11 +376,16 @@ $("jobForm").addEventListener("submit", async event => {
     });
 
     $("jobForm").reset();
-    showStatus("تم إرسال الوظيفة للمراجعة بنجاح ❤️ رقم الطلب: " + docRef.id);
+
+    showStatus(
+      "تم إرسال الوظيفة للمراجعة بنجاح ❤️ رقم الطلب: " + docRef.id
+    );
   } catch (error) {
     console.error("Submit job error:", error);
+
     showStatus(
-      "لم يتم حفظ الوظيفة. رمز الخطأ: " + (error.code || "غير معروف") +
+      "لم يتم حفظ الوظيفة. رمز الخطأ: " +
+      (error.code || "غير معروف") +
       "\nالتفاصيل: " + (error.message || "حاول مرة أخرى."),
       true
     );
