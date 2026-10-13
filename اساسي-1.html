@@ -231,9 +231,16 @@ function renderJobs(allJobs) {
       link.className = "whatsapp";
       link.target = "_blank";
       link.rel = "noopener noreferrer";
-      link.href = "https://wa.me/" + phone.replace(/^\+/, "");
-      link.textContent = "التقديم عبر واتساب";
-      card.append(link);
+let whatsappPhone = phone.replace(/\D/g, "");
+if (whatsappPhone.startsWith("0")) {
+whatsappPhone = "20" + whatsappPhone.substring(1);
+} else if (whatsappPhone.startsWith("+")) {
+whatsappPhone = phone.replace(/\D/g, "");
+}
+link.href = "https://wa.me/" + whatsappPhone;
+link.target = "_blank";
+link.textContent = "التقديم عبر واتساب";
+card.append(link);
     }
     box.append(card);
   });
