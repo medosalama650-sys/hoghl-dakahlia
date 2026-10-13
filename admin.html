@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -9,9 +8,8 @@
 body{font-family:Tahoma,Arial;background:#e8f3ee;margin:0;color:#20342e}
 header{background:#123c35;color:white;padding:22px;text-align:center}
 main{max-width:700px;margin:auto;padding:16px}
-button{border:0;border-radius:8px;padding:12px;background:#123c35;color:white;cursor:pointer;font:inherit}
+button{border:0;border-radius:8px;padding:12px;background:#123c35;color:white;cursor:pointer;font:inherit;margin:4px}
 .card{background:white;padding:15px;border-radius:12px;margin:12px 0}
-button+button{margin-right:6px}
 #status{line-height:1.8}
 </style>
 </head>
@@ -26,22 +24,27 @@ button+button{margin-right:6px}
 <button id="logout" hidden>تسجيل الخروج</button>
 <div id="jobs"></div>
 </main>
+
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import {getAuth,GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import {getFirestore,collection,onSnapshot,doc,updateDoc} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import {
+ getAuth,GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import {
+ getFirestore,collection,onSnapshot,doc,updateDoc
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 const firebaseConfig={
-apiKey:"AIzaSyAx1gcyth1EFOCV2z4peE3nP7F5d2IHDOc",
-authDomain:"hoghl-dakahlia.firebaseapp.com",
-projectId:"hoghl-dakahlia",
-storageBucket:"hoghl-dakahlia.firebasestorage.app",
-messagingSenderId:"437958970783",
-appId:"1:437958970783:web:0399059a90cec0e0aa01aa",
-measurementId:"G-2ZKG5V6ESQ"
+ apiKey:"AIzaSyAx1gcyth1EFOCV2z4peE3nP7F5d2IHDOc",
+ authDomain:"hoghl-dakahlia.firebaseapp.com",
+ projectId:"hoghl-dakahlia",
+ storageBucket:"hoghl-dakahlia.firebasestorage.app",
+ messagingSenderId:"437958970783",
+ appId:"1:437958970783:web:0399059a90cec0e0aa01aa",
+ measurementId:"G-2ZKG5V6ESQ"
 };
 
-const ADMIN_EMAIL="Medosalama650@gmail.com".toLowerCase();
+const ADMIN_EMAIL="medosalama650@gmail.com";
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
@@ -50,84 +53,89 @@ const jobsBox=document.getElementById("jobs");
 let unsubscribe=null;
 
 document.getElementById("login").onclick=async()=>{
-try{
-await signInWithPopup(auth,new GoogleAuthProvider());
-}catch(e){
-status.textContent="تعذر تسجيل الدخول. حاول مرة أخرى.";
-console.error(e);
-}
+ try{
+  await signInWithPopup(auth,new GoogleAuthProvider());
+ }catch(e){
+  status.textContent="تعذر تسجيل الدخول. حاول مرة أخرى.";
+  console.error(e);
+ }
 };
 
 document.getElementById("logout").onclick=()=>signOut(auth);
 
 function el(tag,text){
-const node=document.createElement(tag);
-node.textContent=text||"";
-return node;
+ const node=document.createElement(tag);
+ node.textContent=text||"";
+ return node;
 }
 
 onAuthStateChanged(auth,user=>{
-if(unsubscribe){unsubscribe();unsubscribe=null;}
-jobsBox.replaceChildren();
-document.getElementById("logout").hidden=!user;
-document.getElementById("login").hidden=!!user;
+ if(unsubscribe){unsubscribe();unsubscribe=null;}
+ jobsBox.replaceChildren();
+ document.getElementById("logout").hidden=!user;
+ document.getElementById("login").hidden=!!user;
 
-if(!user){
-status.textContent="سجّل الدخول بحساب المسؤول.";
-return;
-}
+ if(!user){
+  status.textContent="سجّل الدخول بحساب المسؤول.";
+  return;
+ }
 
-if((user.email||"").toLowerCase()!==ADMIN_EMAIL){
-status.textContent="هذا الحساب ليس حساب المسؤول المسموح له بإدارة الوظائف.";
-signOut(auth);
-return;
-}
+ if((user.email||"").toLowerCase()!==ADMIN_EMAIL){
+  status.textContent="هذا الحساب ليس حساب المسؤول المسموح له بإدارة الوظائف.";
+  signOut(auth);
+  return;
+ }
 
-status.textContent="أهلًا بك. جاري تحميل الوظائف...";
-unsubscribe=onSnapshot(collection(db,"jobs"),snapshot=>{
-jobsBox.replaceChildren();
-let count=0;
+ status.textContent="أهلًا بك. جاري تحميل الوظائف...";
 
-snapshot.forEach(item=>{
-const job=item.data();
-if(job.status==="approved"||job.status==="rejected")return;
-count++;
+ unsubscribe=onSnapshot(collection(db,"jobs"),snapshot=>{
+  jobsBox.replaceChildren();
+  let count=0;
 
-const card=el("section");
-card.className="card";
-card.append(el("h3",job.title||"وظيفة بدون عنوان"));
-card.append(el("p","الشركة: "+(job.company||"غير محدد")));
-card.append(el("p","المنطقة: "+(job.area||"غير محددة")));
-card.append(el("p","الراتب: "+(job.salary||"غير محدد")));
-card.append(el("p","التفاصيل: "+(job.details||"لا توجد تفاصيل")));
-card.append(el("p","واتساب: "+(job.phone||"غير متوفر")));
-card.append(el("p","الحالة: قيد المراجعة"));
+  snapshot.forEach(item=>{
+   const job=item.data();
+   if(job.status==="approved"||job.status==="rejected")return;
+   count++;
 
-const approve=el("button","موافقة ونشر");
-approve.onclick=()=>changeStatus(item.id,"approved");
-const reject=el("button","رفض الوظيفة");
-reject.style.background="#a52a2a";
-reject.onclick=()=>changeStatus(item.id,"rejected");
-card.append(approve,reject);
-jobsBox.append(card);
-});
+   const card=el("section");
+   card.className="card";
+   card.append(el("h3",job.title||"وظيفة بدون عنوان"));
+   card.append(el("p","الشركة: "+(job.company||"غير محدد")));
+   card.append(el("p","المنطقة: "+(job.area||"غير محددة")));
+   card.append(el("p","الراتب: "+(job.salary||"غير محدد")));
+   card.append(el("p","التفاصيل: "+(job.details||"لا توجد تفاصيل")));
+   card.append(el("p","واتساب: "+(job.phone||"غير متوفر")));
+   card.append(el("p","الحالة: قيد المراجعة"));
 
-if(count===0)jobsBox.append(el("p","لا توجد وظائف جديدة للمراجعة."));
-status.textContent="تم تحميل قائمة المراجعة.";
-},error=>{
-console.error(error);
-status.textContent="تعذر تحميل الوظائف. راجع قواعد Firestore.";
-});
+   const approve=el("button","موافقة ونشر");
+   approve.onclick=()=>changeStatus(item.id,"approved");
+
+   const reject=el("button","رفض الوظيفة");
+   reject.style.background="#a52a2a";
+   reject.onclick=()=>changeStatus(item.id,"rejected");
+
+   card.append(approve,reject);
+   jobsBox.append(card);
+  });
+
+  if(count===0)jobsBox.append(el("p","لا توجد وظائف جديدة للمراجعة."));
+  status.textContent="تم تحميل قائمة المراجعة.";
+ },error=>{
+  console.error(error);
+  status.textContent="تعذر تحميل الوظائف. راجع قواعد Firestore.";
+ });
 });
 
 async function changeStatus(id,newStatus){
-try{
-await updateDoc(doc(db,"jobs",id),{status:newStatus});
-status.textContent=newStatus==="approved"?"تمت الموافقة على الوظيفة.":"تم رفض الوظيفة.";
-}catch(e){
-console.error(e);
-status.textContent="لم يتم الحفظ. يجب ضبط قواعد Firestore أولًا.";
-}
+ try{
+  await updateDoc(doc(db,"jobs",id),{status:newStatus});
+  status.textContent=newStatus==="approved"
+   ?"تمت الموافقة على الوظيفة."
+   :"تم رفض الوظيفة.";
+ }catch(e){
+  console.error(e);
+  status.textContent="لم يتم الحفظ. يجب ضبط قواعد Firestore أولًا.";
+ }
 }
 </script>
 </body>
