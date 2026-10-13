@@ -281,10 +281,10 @@ function renderJobs(allJobs) {
     if (phone) {
       const link = document.createElement("a");
       link.className = "whatsapp";
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.href = "https://wa.me/" + phone;
-      link.textContent = "التقديم عبر واتساب";
+      link.target = "_self";
+link.rel = "noopener";
+link.href = "https://api.whatsapp.com/send?phone=" + phone;
+link.textContent = "التقديم عبر واتساب";
       card.append(link);
     }
 
