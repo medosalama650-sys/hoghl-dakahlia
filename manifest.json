@@ -1,13 +1,22 @@
+
 {
-  "background_color": "#e8f3ee",
-  "dir": "ltr",
-  "display": "standalone",
+  "id": "./",
   "name": "شغل الدقهلية",
-  "orientation": "any",
-  "scope": "/",
   "short_name": "شغل الدقهلية",
-  "start_url": "/",
+  "description": "منصة الوظائف الحقيقية في المنصورة ومراكز وقرى الدقهلية",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#e8f3ee",
   "theme_color": "#123c35",
-  "id": "/hoghl-dakahlia/",
-  "description": "منصة الوظائف الحقيقية في المنصورة ومراكز وقرى الدقهلية"
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
 }
