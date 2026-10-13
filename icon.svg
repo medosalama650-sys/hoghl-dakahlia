@@ -1,0 +1,8 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="100" fill="#123c35"/>
+  <rect x="88" y="70" width="336" height="372" rx="32" fill="#e8f3ee"/>
+  <text x="256" y="170" text-anchor="middle" font-size="42" font-weight="bold" fill="#123c35">شغل</text>
+  <text x="256" y="235" text-anchor="middle" font-size="42" font-weight="bold" fill="#123c35">الدقهلية</text>
+  <path d="M155 285h202M155 325h202M155 365h140" stroke="#e8b85a" stroke-width="14" stroke-linecap="round"/>
+</svg>
