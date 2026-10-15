@@ -1,0 +1,5 @@
+# robots.txt - شغل الدقهلية
+User-agent: *
+Allow: /
+
+Sitemap: https://medosalama650-sys.github.io/hoghl-dakahlia/sitemap.xml
